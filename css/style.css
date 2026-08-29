@@ -480,82 +480,6 @@ body {
   color: var(--bg);
 }
 
-@media (max-width: 800px) {
-  .stat-card,
-  .contact-link {
-    padding: 24px;
-  }
-
-  .stats-layout {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .stat-card--square {
-    min-height: 200px;
-  }
-
-  .stat-card--long {
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-end;
-  }
-
-  .stat-card--long .stat-card-content {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .about-grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-
-  .founders-grid {
-    gap: 48px;
-  }
-
-  /* The connecting line's path is drawn for the wide desktop layout (a
-     shallow curve from one side to the other); stretched non-uniformly
-     into a narrow, tall mobile column it turns into a steep, jarring
-     diagonal slash across the content, so it's not worth keeping here. */
-  .why-us-line {
-    display: none;
-  }
-
-  .founder-card,
-  .founder-card--right {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .founder-card--right .founder-content {
-    align-items: flex-start;
-    text-align: left;
-  }
-
-  .founder-stats {
-    flex-wrap: wrap;
-    row-gap: 20px;
-  }
-
-  .founder-card--right .founder-stats,
-  .founder-card--right .founder-stat {
-    justify-content: flex-start;
-    align-items: flex-start;
-  }
-
-  .founder-avatar {
-    width: clamp(180px, 55vw, 260px);
-  }
-
-  .contact-grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-}
-
 /* ---------- About ---------- */
 
 .about {
@@ -911,6 +835,80 @@ body {
 }
 
 @media (max-width: 800px) {
+  .stat-card,
+  .contact-link {
+    padding: 24px;
+  }
+
+  .stats-layout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stat-card--square {
+    min-height: 200px;
+  }
+
+  .stat-card--long {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+  }
+
+  .stat-card--long .stat-card-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .founders-grid {
+    gap: 48px;
+  }
+
+  /* The connecting line's path is drawn for the wide desktop layout (a
+     shallow curve from one side to the other); stretched non-uniformly
+     into a narrow, tall mobile column it turns into a steep, jarring
+     diagonal slash across the content, so it's not worth keeping here. */
+  .why-us-line {
+    display: none;
+  }
+
+  .founder-card,
+  .founder-card--right {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .founder-card--right .founder-content {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .founder-stats {
+    flex-wrap: wrap;
+    row-gap: 20px;
+  }
+
+  .founder-card--right .founder-stats,
+  .founder-card--right .founder-stat {
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .founder-avatar {
+    width: clamp(180px, 55vw, 260px);
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
   .footer-top,
   .footer-bottom {
     flex-direction: column;
