@@ -481,6 +481,11 @@ body {
 }
 
 @media (max-width: 800px) {
+  .stat-card,
+  .contact-link {
+    padding: 24px;
+  }
+
   .stats-layout {
     display: flex;
     flex-direction: column;
@@ -511,6 +516,14 @@ body {
     gap: 48px;
   }
 
+  /* The connecting line's path is drawn for the wide desktop layout (a
+     shallow curve from one side to the other); stretched non-uniformly
+     into a narrow, tall mobile column it turns into a steep, jarring
+     diagonal slash across the content, so it's not worth keeping here. */
+  .why-us-line {
+    display: none;
+  }
+
   .founder-card,
   .founder-card--right {
     flex-direction: column;
@@ -520,6 +533,11 @@ body {
   .founder-card--right .founder-content {
     align-items: flex-start;
     text-align: left;
+  }
+
+  .founder-stats {
+    flex-wrap: wrap;
+    row-gap: 20px;
   }
 
   .founder-card--right .founder-stats,
@@ -810,6 +828,7 @@ body {
   font-size: 20px;
   font-weight: 600;
   letter-spacing: -0.01em;
+  overflow-wrap: break-word;
 }
 
 /* ---------- Footer ---------- */

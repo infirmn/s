@@ -313,16 +313,24 @@ window.addEventListener("load", () => {
     (e) => {
       if (touchStartY === null || animating) return;
       const deltaY = touchStartY - e.touches[0].clientY;
-      if (Math.abs(deltaY) < TOUCH_THRESHOLD) return;
 
+      // Browsers decide whether a touch gesture is a native scroll on its
+      // very first touchmove — if preventDefault isn't called right then,
+      // it commits to scrolling and ignores preventDefault on every later
+      // event in the same gesture. So claim it as soon as direction is
+      // known, and only gate the actual trigger behind the threshold.
       if (state === "closed" && deltaY > 0) {
         e.preventDefault();
-        handleGestureDown();
-        touchStartY = null;
+        if (deltaY >= TOUCH_THRESHOLD) {
+          handleGestureDown();
+          touchStartY = null;
+        }
       } else if (state === "open" && deltaY < 0 && window.scrollY <= 1) {
         e.preventDefault();
-        handleGestureUp();
-        touchStartY = null;
+        if (-deltaY >= TOUCH_THRESHOLD) {
+          handleGestureUp();
+          touchStartY = null;
+        }
       }
     },
     { passive: false }
