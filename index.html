@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>starcreates</title>
+  <link rel="icon" type="image/png" href="icons/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div id="loader">
+    <img src="icons/logo.png" alt="" class="loader-logo">
+  </div>
+
+  <header class="site-header">
+    <nav class="nav">
+      <div class="nav-group nav-group-left">
+        <a href="#" class="nav-link">Home</a>
+        <a href="#about" class="nav-link">About Us</a>
+      </div>
+      <a href="#" class="nav-logo"><img src="icons/logo.png" alt="Logo"></a>
+      <div class="nav-group nav-group-right">
+        <a href="#" class="nav-link">Games</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="content">
+    <section class="hero" id="hero">
+      <div class="hero-brand" id="heroBrand">
+        <img src="icons/logo.png" alt="" class="hero-icon" id="heroIcon">
+        <span class="hero-text" id="heroText" data-text="star creates"></span>
+      </div>
+
+      <div class="scroll-cue" id="scrollCue" aria-hidden="true">
+        <span class="scroll-cue-text">Scroll</span>
+        <span class="scroll-cue-arrow">&darr;</span>
+      </div>
+    </section>
+
+    <section class="about" id="about">
+      <div class="stats-banner" aria-hidden="true">
+        <div class="stats-banner-track">
+          <div class="stats-banner-set">
+            <span class="stats-banner-item">ABOUT US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">ABOUT US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">ABOUT US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">ABOUT US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+          </div>
+          <div class="stats-banner-set">
+            <span class="stats-banner-item">ABOUT US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">ABOUT US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">ABOUT US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">ABOUT US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+          </div>
+        </div>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-heading">
+          <h2 class="about-title reveal-text">Creating experiences that matter.</h2>
+          <a href="#contact" class="about-cta">Get in touch</a>
+        </div>
+        <div class="about-body">
+          <p class="about-text reveal-text">starcreates is a small but passionate team dedicated to creating games that foster a strong community. We are always looking for opportunities to grow and improve our creations.</p>
+          <p class="about-text reveal-text">From developing immersive experiences, to acquiring talented developers, we are always looking for ways to grow our community. If you need someone to invest in your project or collaborate with us, feel free to reach out!</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="stats-section">
+      <section class="stats-banner" aria-hidden="true">
+        <div class="stats-banner-track">
+          <div class="stats-banner-set">
+            <span class="stats-banner-item">OUR STATS</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">OUR STATS</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">OUR STATS</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">OUR STATS</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+          </div>
+          <div class="stats-banner-set">
+            <span class="stats-banner-item">OUR STATS</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">OUR STATS</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">OUR STATS</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">OUR STATS</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+          </div>
+        </div>
+      </section>
+
+      <section class="stats-layout">
+        <div class="stat-card stat-card--square">
+          <div class="stat-card-content">
+            <div class="stat-card-value" data-count="1.6" data-decimals="1" data-suffix="M+">0M+</div>
+            <p class="stat-card-desc reveal-text">Total play session across all starcreates games!</p>
+          </div>
+          <svg class="stat-card-graph" viewBox="0 0 300 160">
+            <path id="expPath" d="M0,150 C70,148 130,130 170,95 C205,64 235,25 300,6" />
+            <circle r="3.5" class="stat-card-dot">
+              <animateMotion dur="4.5s" repeatCount="indefinite">
+                <mpath href="#expPath"></mpath>
+              </animateMotion>
+            </circle>
+          </svg>
+        </div>
+
+        <div class="stat-card stat-card--long stat-card--slot-3a">
+          <div class="stat-card-value" data-count="24.5" data-suffix="K+">0K+</div>
+          <p class="stat-card-desc reveal-text">Monthly Active Users</p>
+        </div>
+
+        <div class="stat-card stat-card--long stat-card--graph-long stat-card--slot-3b">
+          <div class="stat-card-content">
+            <div class="stat-card-value" data-count="342248">0</div>
+            <p class="stat-card-desc reveal-text">We have created a vibrant community of over 342,248 active players.</p>
+          </div>
+          <svg class="stat-card-graph" viewBox="0 0 300 160" preserveAspectRatio="xMidYMid slice">
+            <path id="flucPath" d="M0,80 C25,20 75,20 100,80 C125,140 175,140 200,80 C225,20 275,20 300,80" />
+            <circle r="3.5" class="stat-card-dot">
+              <animateMotion dur="5.5s" repeatCount="indefinite">
+                <mpath href="#flucPath"></mpath>
+              </animateMotion>
+            </circle>
+          </svg>
+        </div>
+
+        <div class="stat-card stat-card--long stat-card--fill">
+          <div class="stat-card-value" data-count="3" data-suffix="+">0+</div>
+          <p class="stat-card-desc reveal-text">Successful titles on the Roblox platform</p>
+        </div>
+
+        <a href="#contact" class="stat-card stat-card--long stat-card--cta">
+          <span class="stat-card-value reveal-text">Looking to work with us?</span>
+          <span class="cta-arrow-wrap" aria-hidden="true">
+            <svg class="cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </span>
+        </a>
+      </section>
+    </div>
+
+    <section class="why-us" id="why-us">
+      <div class="stats-banner" aria-hidden="true">
+        <div class="stats-banner-track">
+          <div class="stats-banner-set">
+            <span class="stats-banner-item">WHY US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">WHY US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">WHY US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">WHY US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+          </div>
+          <div class="stats-banner-set">
+            <span class="stats-banner-item">WHY US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">WHY US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">WHY US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">WHY US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+          </div>
+        </div>
+      </div>
+
+      <div class="founders-grid">
+        <svg class="why-us-line" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
+          <path
+            id="whyUsLinePath"
+            pathLength="1"
+            d="M 70 560 C 340 560, 220 300, 500 300 C 780 300, 660 40, 930 40"
+          />
+        </svg>
+
+        <div class="founder-card">
+          <div class="founder-avatar"><img src="avatars/inf.png" alt="@infirmn"></div>
+          <div class="founder-content">
+            <span class="founder-name">inf</span>
+            <span class="founder-handle">@infirmn</span>
+            <h3 class="founder-role reveal-text">Co-Founder &amp; Lead Developer</h3>
+            <p class="founder-bio reveal-text">Started building starcreates from a bedroom setup and never stopped pushing. Previously worked with big names like Team17, and never looked back.</p>
+            <div class="founder-stats">
+              <div class="founder-stat">
+                <div class="founder-stat-value" data-count="250" data-suffix="M+">0</div>
+                <span class="founder-stat-label">Monthly Active Users</span>
+              </div>
+              <div class="founder-stat">
+                <div class="founder-stat-value" data-count="4" data-start="0.5" data-decimals="1" data-suffix="B+">0.5B+</div>
+                <span class="founder-stat-label">Contributed Play Sessions</span>
+              </div>
+                            <div class="founder-stat">
+                <div class="founder-stat-value" data-count="7" data-suffix="+">0+</div>
+                <span class="founder-stat-label">Years Experience</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="founder-card founder-card--right">
+          <div class="founder-avatar"><img src="avatars/esyt.png" alt="@esyt"></div>
+          <div class="founder-content">
+            <span class="founder-name">esyt</span>
+            <span class="founder-handle">@ESGaminggg</span>
+            <h3 class="founder-role reveal-text">Co-Founder &amp; Community Lead</h3>
+            <p class="founder-bio reveal-text">Develops a stale prototype into a polished and satisfying game, with his incredible suggestions and UI design.</p>
+            <div class="founder-stats">
+              <div class="founder-stat">
+                <div class="founder-stat-value" data-count="3" data-suffix="+">0+</div>
+                <span class="founder-stat-label">Years Experience</span>
+              </div>
+              <div class="founder-stat">
+                <div class="founder-stat-value" data-count="1.2" data-suffix="M+">0+</div>
+                <span class="founder-stat-label">Contributed Play Sessions</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="stats-banner" aria-hidden="true">
+        <div class="stats-banner-track">
+          <div class="stats-banner-set">
+            <span class="stats-banner-item">CONTACT US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">CONTACT US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">CONTACT US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">CONTACT US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+          </div>
+          <div class="stats-banner-set">
+            <span class="stats-banner-item">CONTACT US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">CONTACT US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">CONTACT US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+            <span class="stats-banner-item">CONTACT US</span>
+            <img class="stats-banner-star" src="icons/logo.png" alt="">
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-grid">
+        <div class="about-heading">
+          <h2 class="about-title reveal-text">Let's build something together.</h2>
+          <p class="about-text reveal-text">Whether it's a partnership, a game acquisition, or an investment - we read every single message ourselves.</p>
+        </div>
+
+        <div class="contact-links">
+          <a href="mailto:hello@starcreates.org" class="stat-card contact-link">
+            <span class="contact-link-label">Email</span>
+            <span class="contact-link-value">hello@starcreates.org</span>
+          </a>
+
+          <a href="https://x.com/starcreates_dev" target="_blank" rel="noopener" class="stat-card contact-link">
+            <span class="contact-link-label">X / Twitter</span>
+            <span class="contact-link-value">@starcreates_dev</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-top">
+      <a href="#" class="footer-brand">
+        <img src="icons/logo.png" alt="" class="footer-logo">
+        <span>starcreates</span>
+      </a>
+
+      <nav class="footer-nav">
+        <a href="#about" class="nav-link">About</a>
+        <a href="#" class="nav-link">Games</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 starcreates. All rights reserved.</span>
+      <div class="footer-social">
+        <a href="https://x.com/starcreates_dev" target="_blank" rel="noopener">X / Twitter</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
