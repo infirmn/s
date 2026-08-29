@@ -135,6 +135,27 @@ body {
   filter: invert(var(--nav-invert));
 }
 
+@media (max-width: 640px) {
+  .site-header {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .nav,
+  .nav-group {
+    gap: 14px;
+  }
+
+  .nav-link {
+    font-size: 12px;
+  }
+
+  .nav-logo img {
+    width: 30px;
+    height: 30px;
+  }
+}
+
 /* ---------- Page content ---------- */
 
 #content {
@@ -160,6 +181,16 @@ body {
   text-align: center;
 }
 
+/* 100vh includes the mobile browser's address bar on many phones, leaving
+   the hero taller than what's actually visible. dvh tracks the real
+   visible viewport instead — falls back to the 100vh above on browsers
+   that don't support it. */
+@supports (height: 100dvh) {
+  .hero {
+    height: calc((100dvh - var(--header-h)) * var(--hero-scale, 1));
+  }
+}
+
 .hero::before {
   content: "";
   position: absolute;
@@ -183,15 +214,15 @@ body {
 }
 
 .hero-icon {
-  width: clamp(90px, 12vw, 160px);
-  height: clamp(90px, 12vw, 160px);
+  width: clamp(60px, 16vw, 160px);
+  height: clamp(60px, 16vw, 160px);
   object-fit: contain;
   margin-right: -14px;
   will-change: transform, opacity, filter;
 }
 
 .hero-text {
-  font-size: clamp(36px, 6vw, 64px);
+  font-size: clamp(26px, 8vw, 64px);
   font-weight: 600;
   letter-spacing: -0.02em;
   text-transform: lowercase;
