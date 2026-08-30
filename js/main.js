@@ -110,6 +110,20 @@ window.addEventListener("load", () => {
     return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
   }
 
+  // filter: blur() on an element being scaled up 10x means the browser has
+  // to blur a huge rasterized surface every frame — desktop GPUs shrug this
+  // off, phones don't. Touch/coarse-pointer devices get a noticeably
+  // cheaper (but still very much "expand and blur into a flash") version:
+  // less scale (area, and so blur cost, drops with the square of it), less
+  // blur radius, same easing/timing/opacity — same effect, lighter render.
+  const REDUCE_MOTION_COST =
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(pointer: coarse)").matches;
+
+  const ICON_MAX_SCALE = REDUCE_MOTION_COST ? 6 : 10;
+  const ICON_MAX_BLUR = REDUCE_MOTION_COST ? 14 : 26;
+  const LETTER_MAX_BLUR = REDUCE_MOTION_COST ? 5 : 8;
+
   // Icon slide/scale/blur + letters blur-out — purely cosmetic motion, no
   // color/theme changes. Shared by the real toggle and the intro replay.
   function applyMotion(progress) {
@@ -121,12 +135,12 @@ window.addEventListener("load", () => {
       const end = start + 0.07;
       const hidden = mapClamp(progress, start, end, 0, 1);
       letter.style.opacity = 1 - hidden;
-      letter.style.filter = `blur(${hidden * 8}px)`;
+      letter.style.filter = `blur(${hidden * LETTER_MAX_BLUR}px)`;
     });
 
     // Phase 2 (0.38 -> 0.7): star expands and blurs into a soft flash, then fades.
-    const scale = mapClamp(progress, 0.38, 0.62, 1, 10);
-    const iconBlur = mapClamp(progress, 0.38, 0.65, 0, 26);
+    const scale = mapClamp(progress, 0.38, 0.62, 1, ICON_MAX_SCALE);
+    const iconBlur = mapClamp(progress, 0.38, 0.65, 0, ICON_MAX_BLUR);
     const iconOpacity = mapClamp(progress, 0.5, 0.68, 1, 0);
 
     heroIcon.style.transform = `translateX(${slideX}px) scale(${scale})`;
@@ -147,6 +161,15 @@ window.addEventListener("load", () => {
   let lastFg = null;
   let lastNavInvert = null;
   let lastHeroScale = null;
+
+  // --hero-scale feeds .hero's actual height, so writing it forces a real
+  // layout reflow of the hero and everything below it — every frame, for
+  // the ~480ms this phase runs, that's ~30+ forced reflows desktop CPUs
+  // don't notice but phones do. A subtle background height collapse
+  // doesn't need 60fps to read as smooth, so it's throttled to update at
+  // most every ~50ms (~20fps) instead of every animation frame.
+  let lastHeroScaleWriteTime = 0;
+  const HERO_SCALE_INTERVAL_MS = 50;
 
   function applyTheme(progress) {
     // Background fades black -> white on a broad curve; text flips white -> black
@@ -176,9 +199,17 @@ window.addEventListener("load", () => {
     // stats section lands right under the nav instead of sitting a full
     // viewport below an empty white landing area.
     const heroScale = mapClamp(progress, 0.68, 1, 1, 0).toFixed(4);
-    if (heroScale !== lastHeroScale) {
+    const now = performance.now();
+    // Always write on the exact settled ends (progress 0 or 1) so the tween
+    // never finishes mid-throttle short of fully expanded/collapsed.
+    const isSettled = progress === 0 || progress === 1;
+    if (
+      heroScale !== lastHeroScale &&
+      (isSettled || now - lastHeroScaleWriteTime >= HERO_SCALE_INTERVAL_MS)
+    ) {
       root.style.setProperty("--hero-scale", heroScale);
       lastHeroScale = heroScale;
+      lastHeroScaleWriteTime = now;
     }
   }
 
