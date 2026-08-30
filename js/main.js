@@ -110,19 +110,32 @@ window.addEventListener("load", () => {
     return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
   }
 
-  // filter: blur() on an element being scaled up 10x means the browser has
-  // to blur a huge rasterized surface every frame — desktop GPUs shrug this
+  // filter: blur() on an element being scaled up means the browser has to
+  // blur a huge rasterized surface every frame — desktop GPUs shrug this
   // off, phones don't. Touch/coarse-pointer devices get a noticeably
-  // cheaper (but still very much "expand and blur into a flash") version:
-  // less scale (area, and so blur cost, drops with the square of it), less
-  // blur radius, same easing/timing/opacity — same effect, lighter render.
+  // cheaper version: less icon scale (blur cost drops with the square of
+  // it), less blur radius, and letters skip the blur filter entirely
+  // (12 elements each running their own blur filter adds up on weak GPUs
+  // regardless of how the scale/radius numbers are tuned) — opacity-only
+  // fade for them instead. Same shape of effect, lighter render. Desktop
+  // is untouched.
   const REDUCE_MOTION_COST =
     typeof window.matchMedia === "function" &&
     window.matchMedia("(pointer: coarse)").matches;
 
-  const ICON_MAX_SCALE = REDUCE_MOTION_COST ? 6 : 10;
-  const ICON_MAX_BLUR = REDUCE_MOTION_COST ? 14 : 26;
-  const LETTER_MAX_BLUR = REDUCE_MOTION_COST ? 5 : 8;
+  const ICON_MAX_SCALE = REDUCE_MOTION_COST ? 5 : 10;
+  const ICON_MAX_BLUR = REDUCE_MOTION_COST ? 10 : 26;
+  const LETTER_MAX_BLUR = REDUCE_MOTION_COST ? 0 : 8;
+
+  // Every one of these values is only actually *changing* during a fraction
+  // of the 1500ms animation — most letters are fully settled well before
+  // the end, and the icon doesn't start moving until 38% in — but this used
+  // to write style.opacity/filter/transform unconditionally every frame
+  // regardless, for the full duration. That's a lot of pure-waste style
+  // recalculation on frames where nothing actually changed. Cache the last
+  // applied value per property and skip the write when it's identical.
+  const letterState = letters.map(() => ({ opacity: null, filter: null }));
+  const iconState = { transform: null, filter: null, opacity: null };
 
   // Icon slide/scale/blur + letters blur-out — purely cosmetic motion, no
   // color/theme changes. Shared by the real toggle and the intro replay.
@@ -134,8 +147,21 @@ window.addEventListener("load", () => {
       const start = mapClamp(i, 0, letters.length - 1, 0.04, 0.34);
       const end = start + 0.07;
       const hidden = mapClamp(progress, start, end, 0, 1);
-      letter.style.opacity = 1 - hidden;
-      letter.style.filter = `blur(${hidden * LETTER_MAX_BLUR}px)`;
+      const st = letterState[i];
+
+      const opacity = 1 - hidden;
+      if (opacity !== st.opacity) {
+        letter.style.opacity = opacity;
+        st.opacity = opacity;
+      }
+
+      if (LETTER_MAX_BLUR > 0) {
+        const filter = `blur(${hidden * LETTER_MAX_BLUR}px)`;
+        if (filter !== st.filter) {
+          letter.style.filter = filter;
+          st.filter = filter;
+        }
+      }
     });
 
     // Phase 2 (0.38 -> 0.7): star expands and blurs into a soft flash, then fades.
@@ -143,9 +169,20 @@ window.addEventListener("load", () => {
     const iconBlur = mapClamp(progress, 0.38, 0.65, 0, ICON_MAX_BLUR);
     const iconOpacity = mapClamp(progress, 0.5, 0.68, 1, 0);
 
-    heroIcon.style.transform = `translateX(${slideX}px) scale(${scale})`;
-    heroIcon.style.filter = `blur(${iconBlur}px)`;
-    heroIcon.style.opacity = iconOpacity;
+    const transform = `translateX(${slideX}px) scale(${scale})`;
+    if (transform !== iconState.transform) {
+      heroIcon.style.transform = transform;
+      iconState.transform = transform;
+    }
+    const filter = `blur(${iconBlur}px)`;
+    if (filter !== iconState.filter) {
+      heroIcon.style.filter = filter;
+      iconState.filter = filter;
+    }
+    if (iconOpacity !== iconState.opacity) {
+      heroIcon.style.opacity = iconOpacity;
+      iconState.opacity = iconOpacity;
+    }
   }
 
   // Background/text color crossfade + hero collapse — the actual toggle
