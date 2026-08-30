@@ -160,16 +160,6 @@ window.addEventListener("load", () => {
   let lastBg = null;
   let lastFg = null;
   let lastNavInvert = null;
-  let lastHeroScale = null;
-
-  // --hero-scale feeds .hero's actual height, so writing it forces a real
-  // layout reflow of the hero and everything below it — every frame, for
-  // the ~480ms this phase runs, that's ~30+ forced reflows desktop CPUs
-  // don't notice but phones do. A subtle background height collapse
-  // doesn't need 60fps to read as smooth, so it's throttled to update at
-  // most every ~50ms (~20fps) instead of every animation frame.
-  let lastHeroScaleWriteTime = 0;
-  const HERO_SCALE_INTERVAL_MS = 50;
 
   function applyTheme(progress) {
     // Background fades black -> white on a broad curve; text flips white -> black
@@ -194,23 +184,23 @@ window.addEventListener("load", () => {
       root.style.setProperty("--nav-invert", navInvert);
       lastNavInvert = navInvert;
     }
+  }
 
-    // Once the flash/fade has settled, collapse the hero out of the way so the
-    // stats section lands right under the nav instead of sitting a full
-    // viewport below an empty white landing area.
-    const heroScale = mapClamp(progress, 0.68, 1, 1, 0).toFixed(4);
-    const now = performance.now();
-    // Always write on the exact settled ends (progress 0 or 1) so the tween
-    // never finishes mid-throttle short of fully expanded/collapsed.
-    const isSettled = progress === 0 || progress === 1;
-    if (
-      heroScale !== lastHeroScale &&
-      (isSettled || now - lastHeroScaleWriteTime >= HERO_SCALE_INTERVAL_MS)
-    ) {
-      root.style.setProperty("--hero-scale", heroScale);
-      lastHeroScale = heroScale;
-      lastHeroScaleWriteTime = now;
-    }
+  // Collapsing the hero out of the way (so the stats section lands right
+  // under the nav) used to be driven by writing --hero-scale on every
+  // animation frame, which forces a real layout reflow of the hero and
+  // everything below it each time — ~30 forced reflows over the course of
+  // the toggle, competing with the icon/color work on the same frame
+  // budget. Set once per gesture instead and let a native CSS transition
+  // (see .hero in style.css) do the actual smooth interpolation — same
+  // timing, none of the per-frame JS/layout cost.
+  const HERO_COLLAPSE_DELAY = 850; // ms — roughly when eased progress crosses 0.68 while opening
+  const HERO_COLLAPSE_DURATION = 650; // ms
+
+  function setHeroCollapse(collapsed) {
+    hero.style.transitionDelay = collapsed ? `${HERO_COLLAPSE_DELAY}ms` : "0ms";
+    hero.style.transitionDuration = `${HERO_COLLAPSE_DURATION}ms`;
+    root.style.setProperty("--hero-scale", collapsed ? "0" : "1");
   }
 
   function applyProgress(progress) {
@@ -249,6 +239,7 @@ window.addEventListener("load", () => {
     if (animating || state !== "closed") return;
     state = "open";
     if (scrollCue) scrollCue.classList.add("scroll-cue--hidden");
+    setHeroCollapse(true);
     animateTo(1);
   }
 
@@ -256,6 +247,7 @@ window.addEventListener("load", () => {
     if (animating || state !== "open") return;
     state = "closed";
     if (scrollCue) scrollCue.classList.remove("scroll-cue--hidden");
+    setHeroCollapse(false);
     animateTo(0);
   }
 

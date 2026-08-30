@@ -179,6 +179,12 @@ body {
   justify-content: center;
   overflow: hidden;
   text-align: center;
+  /* Set once per toggle by JS (which also sets transition-delay to time it
+     against the rest of the animation) instead of writing --hero-scale
+     every frame — hands the actual smooth interpolation off to the
+     browser's native transition engine rather than a JS rAF loop forcing
+     a layout recalc ~30 times over the animation. */
+  transition: height 480ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* 100vh includes the mobile browser's address bar on many phones, leaving
