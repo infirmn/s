@@ -1151,9 +1151,6 @@ a.game-card:hover .game-thumb {
   animation: pulse 2s ease-in-out infinite;
 }
 
-.game-tag--down .game-tag-dot {
-  background: #e5484d;
-}
 
 /* Coming soon art: the landing hero's grid and a glowing star. */
 .game-art {
@@ -1195,20 +1192,7 @@ a.game-card:hover .game-thumb {
   animation: pulse 3.2s ease-in-out infinite;
 }
 
-.game-fallback-title {
-  position: relative;
-  margin-bottom: 8%;
-  font-size: clamp(28px, 3vw, 40px);
-  font-weight: 800;
-  line-height: 0.95;
-  text-align: center;
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.45);
-}
 
-.game-card--down .game-thumb {
-  filter: grayscale(0.4);
-}
 
 .games-cta {
   display: flex;
