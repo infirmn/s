@@ -1107,6 +1107,62 @@ body {
   opacity: 0.85;
 }
 
+.game-info {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  cursor: help;
+  outline: none;
+}
+
+.game-info svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.game-info-tip {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  padding: 7px 12px;
+  border-radius: 10px;
+  background: #fff;
+  color: #000;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.game-info:hover .game-info-tip,
+.game-info:focus-visible .game-info-tip,
+.game-info.is-open .game-info-tip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.game-info:focus-visible {
+  box-shadow: 0 0 0 2px #fff;
+}
+
 .game-meta-item svg {
   width: 15px;
   height: 15px;

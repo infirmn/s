@@ -832,3 +832,38 @@ window.addEventListener("load", () => {
     document.querySelectorAll(".page-exit").forEach((el) => el.remove());
   });
 })();
+
+/* ---------- Game card info tooltips ---------- */
+/* Hover shows the tooltip on desktop (CSS). On touch there's no hover, so a
+   tap toggles it instead, and the tap mustn't fall through to the card's
+   own link to the game page. */
+
+(() => {
+  const infos = document.querySelectorAll(".game-info");
+  if (!infos.length) return;
+
+  function closeAll(except) {
+    infos.forEach((el) => {
+      if (el !== except) el.classList.remove("is-open");
+    });
+  }
+
+  infos.forEach((info) => {
+    info.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      closeAll(info);
+      info.classList.toggle("is-open");
+    });
+
+    info.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      e.preventDefault();
+      e.stopPropagation();
+      closeAll(info);
+      info.classList.toggle("is-open");
+    });
+  });
+
+  document.addEventListener("click", () => closeAll(null));
+})();
