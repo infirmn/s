@@ -1116,40 +1116,9 @@ a.game-card:hover .game-thumb {
   stroke-linejoin: round;
 }
 
-.game-tag {
-  position: absolute;
-  top: 14px;
-  left: 14px;
-  z-index: 2;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 5px 11px;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-}
 
-.game-tag-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-}
 
-.game-tag--live .game-tag-dot {
-  background: #3ddc84;
-  box-shadow: 0 0 8px #3ddc84;
-  animation: pulse 2s ease-in-out infinite;
-}
 
-.game-tag--dev .game-tag-dot {
-  background: #f5b942;
-  box-shadow: 0 0 8px #f5b942;
-  animation: pulse 2s ease-in-out infinite;
-}
 
 
 /* Coming soon art: the landing hero's grid and a glowing star. */
