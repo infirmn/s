@@ -789,11 +789,10 @@ window.addEventListener("load", () => {
     if (url.origin !== window.location.origin) return false;
 
     // Same page, just a different (or no) hash — leave that to the page's
-    // own in-page handling.
-    const samePage =
-      url.pathname === window.location.pathname ||
-      (/\/(index\.html)?$/.test(url.pathname) && /\/(index\.html)?$/.test(window.location.pathname));
-    return !samePage;
+    // own in-page handling. "/games" and "/games.html", and "/" and
+    // "/index.html", are the same page.
+    const normalise = (p) => p.replace(/\.html$/, "").replace(/\/index$/, "/");
+    return normalise(url.pathname) !== normalise(window.location.pathname);
   }
 
   function leaveTo(href) {
