@@ -1,24 +1,12 @@
-// The browser restoring scroll position on refresh conflicts with the
-// hero's own open/closed state machine (which assumes it always starts at
-// the top, closed). Force every load to start fresh at the top instead.
 if ("scrollRestoration" in history) {
   history.scrollRestoration = "manual";
 }
 window.scrollTo(0, 0);
 
-// Set by the hero toggle module below; triggers the same star-slide/text-reveal
-// animation used for the scroll toggle, played once as the loader hands off.
 let heroPlayIntro = () => {};
 
-// Set by the hero toggle module below. When the page is opened at
-// index.html#about / #contact (e.g. from the games page's nav), jumps
-// straight to the open/white state at that section while the loader still
-// covers the screen. Returns false if there's no such hash to honour.
 let heroArriveAtHash = () => false;
 
-// Set by the page-transition module when we're leaving one page of the site
-// for another, so the next page's loader can hand off quickly instead of
-// replaying the full first-visit intro.
 const NAV_FLAG = "sc-internal-nav";
 
 function consumeInternalNavFlag() {
@@ -74,9 +62,6 @@ window.addEventListener("load", () => {
   }, MIN_DISPLAY_TIME);
 });
 
-/* ---------- Hero toggle transition ---------- */
-/* One scroll/swipe gesture plays the whole animation; the opposite gesture undoes it. */
-
 (() => {
   const header = document.querySelector(".site-header");
   const hero = document.getElementById("hero");
@@ -88,9 +73,8 @@ window.addEventListener("load", () => {
   if (!hero || !heroIcon || !heroText) return;
 
   const root = document.documentElement;
-  const DURATION = 1500; // ms, slow and deliberate
+  const DURATION = 1500;
 
-  // Build one span per character so each letter can blur/hide individually.
   const text = heroText.getAttribute("data-text") || heroText.textContent;
   heroText.textContent = "";
   const letters = [...text].map((char) => {
@@ -106,8 +90,6 @@ window.addEventListener("load", () => {
   function measure() {
     root.style.setProperty("--header-h", `${header.offsetHeight}px`);
 
-    // Read the icon's natural (untransformed) box, since by the time this
-    // re-runs (on load/resize) it may already be mid-animation and scaled.
     const prevTransform = heroIcon.style.transform;
     heroIcon.style.transform = "none";
     const brandRect = heroBrand.getBoundingClientRect();
@@ -135,15 +117,6 @@ window.addEventListener("load", () => {
     return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
   }
 
-  // filter: blur() on an element being scaled up means the browser has to
-  // blur a huge rasterized surface every frame — desktop GPUs shrug this
-  // off, phones don't. Touch/coarse-pointer devices get a noticeably
-  // cheaper version: less icon scale (blur cost drops with the square of
-  // it), less blur radius, and letters skip the blur filter entirely
-  // (12 elements each running their own blur filter adds up on weak GPUs
-  // regardless of how the scale/radius numbers are tuned) — opacity-only
-  // fade for them instead. Same shape of effect, lighter render. Desktop
-  // is untouched.
   const REDUCE_MOTION_COST =
     typeof window.matchMedia === "function" &&
     window.matchMedia("(pointer: coarse)").matches;
@@ -152,20 +125,10 @@ window.addEventListener("load", () => {
   const ICON_MAX_BLUR = REDUCE_MOTION_COST ? 10 : 26;
   const LETTER_MAX_BLUR = REDUCE_MOTION_COST ? 0 : 8;
 
-  // Every one of these values is only actually *changing* during a fraction
-  // of the 1500ms animation — most letters are fully settled well before
-  // the end, and the icon doesn't start moving until 38% in — but this used
-  // to write style.opacity/filter/transform unconditionally every frame
-  // regardless, for the full duration. That's a lot of pure-waste style
-  // recalculation on frames where nothing actually changed. Cache the last
-  // applied value per property and skip the write when it's identical.
   const letterState = letters.map(() => ({ opacity: null, filter: null }));
   const iconState = { transform: null, filter: null, opacity: null };
 
-  // Icon slide/scale/blur + letters blur-out — purely cosmetic motion, no
-  // color/theme changes. Shared by the real toggle and the intro replay.
   function applyMotion(progress) {
-    // Phase 1 (0 -> 0.38): star slides across the text, letters blur out in sequence.
     const slideX = mapClamp(progress, 0, 0.38, 0, slideDistance);
 
     letters.forEach((letter, i) => {
@@ -189,7 +152,6 @@ window.addEventListener("load", () => {
       }
     });
 
-    // Phase 2 (0.38 -> 0.7): star expands and blurs into a soft flash, then fades.
     const scale = mapClamp(progress, 0.38, 0.62, 1, ICON_MAX_SCALE);
     const iconBlur = mapClamp(progress, 0.38, 0.65, 0, ICON_MAX_BLUR);
     const iconOpacity = mapClamp(progress, 0.5, 0.68, 1, 0);
@@ -210,23 +172,11 @@ window.addEventListener("load", () => {
     }
   }
 
-  // Background/text color crossfade + hero collapse — the actual toggle
-  // functionality. Only used by the real scroll/swipe gesture, never the intro.
-  //
-  // --bg/--fg feed color-mix() in dozens of places across the whole page
-  // (every card border/background, nav links, etc.), so writing them to
-  // :root forces a big style recalculation each time. lerpColor() already
-  // rounds to whole 0-255 steps, so plenty of consecutive frames produce the
-  // exact same string — skip the write (and the recalc) on those frames.
-  // Same visual result, far fewer forced recalcs.
   let lastBg = null;
   let lastFg = null;
   let lastNavInvert = null;
 
   function applyTheme(progress) {
-    // Background fades black -> white on a broad curve; text flips white -> black
-    // on a short, steep curve so it crosses the low-contrast midpoint quickly
-    // instead of hanging there invisible.
     const bgT = mapClamp(progress, 0.4, 0.68, 0, 1);
     const fgT = mapClamp(progress, 0.5, 0.56, 0, 1);
 
@@ -248,16 +198,8 @@ window.addEventListener("load", () => {
     }
   }
 
-  // Collapsing the hero out of the way (so the stats section lands right
-  // under the nav) used to be driven by writing --hero-scale on every
-  // animation frame, which forces a real layout reflow of the hero and
-  // everything below it each time — ~30 forced reflows over the course of
-  // the toggle, competing with the icon/color work on the same frame
-  // budget. Set once per gesture instead and let a native CSS transition
-  // (see .hero in style.css) do the actual smooth interpolation — same
-  // timing, none of the per-frame JS/layout cost.
-  const HERO_COLLAPSE_DELAY = 850; // ms — roughly when eased progress crosses 0.68 while opening
-  const HERO_COLLAPSE_DURATION = 650; // ms
+  const HERO_COLLAPSE_DELAY = 850;
+  const HERO_COLLAPSE_DURATION = 650;
 
   function setHeroCollapse(collapsed) {
     hero.style.transitionDelay = collapsed ? `${HERO_COLLAPSE_DELAY}ms` : "0ms";
@@ -271,7 +213,7 @@ window.addEventListener("load", () => {
   }
 
   let currentProgress = 0;
-  let state = "closed"; // "closed" -> black landing, "open" -> white revealed
+  let state = "closed";
   let animating = false;
 
   function animateTo(target) {
@@ -313,11 +255,6 @@ window.addEventListener("load", () => {
     animateTo(0);
   }
 
-  // Nav links (and the stats CTA) point at real sections below the hero via
-  // #hash anchors. A native anchor jump bypasses this whole module entirely
-  // (no wheel/touch event fires), teleporting the page while the black/white
-  // toggle never actually plays. Intercept those clicks and route them
-  // through the same open animation, then scroll once it's done.
   function scrollToTarget(target) {
     const headerH =
       parseFloat(getComputedStyle(root).getPropertyValue("--header-h")) || 0;
@@ -341,10 +278,6 @@ window.addEventListener("load", () => {
     });
   });
 
-  // Intro replay: same slide/scale/blur motion, played once on load — but
-  // motion only. Background stays black throughout; doesn't touch
-  // currentProgress/state, so the real toggle is untouched and still starts
-  // fresh from "closed".
   const INTRO_DURATION = 1300;
 
   heroPlayIntro = function playIntro() {
@@ -364,11 +297,6 @@ window.addEventListener("load", () => {
     requestAnimationFrame(step);
   };
 
-  // Arriving at index.html#about / #contact from another page: the browser's
-  // native hash jump would land on the section while the page is still in
-  // its closed/black state. Instead, snap straight to the fully open state
-  // (no animation — the loader is still covering the screen at this point)
-  // and position the section under the nav.
   heroArriveAtHash = function arriveAtHash() {
     const hash = window.location.hash;
     if (hash !== "#about" && hash !== "#contact") return false;
@@ -382,7 +310,7 @@ window.addEventListener("load", () => {
     hero.style.transition = "none";
     root.style.setProperty("--hero-scale", "0");
     applyProgress(1);
-    void hero.offsetHeight; // commit the collapsed height before re-enabling the transition
+    void hero.offsetHeight;
     hero.style.transition = "";
 
     const headerH =
@@ -427,11 +355,6 @@ window.addEventListener("load", () => {
       if (touchStartY === null || animating) return;
       const deltaY = touchStartY - e.touches[0].clientY;
 
-      // Browsers decide whether a touch gesture is a native scroll on its
-      // very first touchmove — if preventDefault isn't called right then,
-      // it commits to scrolling and ignores preventDefault on every later
-      // event in the same gesture. So claim it as soon as direction is
-      // known, and only gate the actual trigger behind the threshold.
       if (state === "closed" && deltaY > 0) {
         e.preventDefault();
         if (deltaY >= TOUCH_THRESHOLD) {
@@ -466,9 +389,6 @@ window.addEventListener("load", () => {
   applyProgress(currentProgress);
 })();
 
-/* ---------- Stat counters ---------- */
-/* Count up to the target once, the first time it scrolls into view. */
-
 (() => {
   const COUNT_DURATION = 1800;
 
@@ -479,8 +399,6 @@ window.addEventListener("load", () => {
   function formatValue(value, decimals, prefix, suffix) {
     let num;
     if (decimals > 0) {
-      // Trim trailing zeros (10.0 -> 10) so a fractional start value can
-      // settle on a clean whole number without a dangling ".0".
       num = value.toFixed(decimals).replace(/(\.\d*?)0+$/, "$1").replace(/\.$/, "");
     } else {
       num = Math.round(value).toLocaleString("en-US");
@@ -488,13 +406,6 @@ window.addEventListener("load", () => {
     return `${prefix}${num}${suffix}`;
   }
 
-  // A handful of these can start on the exact same frame (e.g. every card in
-  // the stats grid crossing the viewport threshold together). Driving each
-  // with its own independent requestAnimationFrame chain means that many
-  // separate callbacks competing on one frame — right as the page is also
-  // mid-scroll — which is what made the page (and the sticky nav) stutter.
-  // One shared driver loop that updates every active counter per frame
-  // keeps it to a single scheduled callback no matter how many start at once.
   const active = [];
   let driving = false;
 
@@ -556,10 +467,8 @@ window.addEventListener("load", () => {
   }
 })();
 
-/* ---------- Letter-by-letter reveal ---------- */
-
 (() => {
-  const SPREAD_MS = 700; // total time the stagger spreads across, regardless of text length
+  const SPREAD_MS = 700;
 
   const targets = document.querySelectorAll(".reveal-text");
 
@@ -605,12 +514,6 @@ window.addEventListener("load", () => {
     el.appendChild(wrapper);
   });
 
-  // will-change hints the browser to promote each letter to its own
-  // compositor layer *before* the transition starts, avoiding extra paint
-  // work from the burst of simultaneously-animating letters. Only kept on
-  // for the ~1.2s the reveal is actually active (see .reveal-done in CSS) —
-  // leaving it on permanently for every letter on the page, forever, would
-  // waste GPU memory instead of saving work.
   function reveal(el) {
     el.classList.add("reveal-in");
     setTimeout(() => el.classList.add("reveal-done"), 1300);
@@ -635,8 +538,6 @@ window.addEventListener("load", () => {
   }
 })();
 
-/* ---------- Why Us line draw-in ---------- */
-
 (() => {
   const whyUs = document.querySelector(".why-us");
   if (!whyUs) return;
@@ -659,10 +560,6 @@ window.addEventListener("load", () => {
     whyUs.classList.add("line-in");
   }
 })();
-
-/* ---------- About CTA reveal ---------- */
-/* Fades/rises in once the heading is in view; its CSS transition-delay is
-   tuned to land just after the heading's own letter-by-letter reveal finishes. */
 
 (() => {
   const cta = document.querySelector(".about-cta");
@@ -687,13 +584,6 @@ window.addEventListener("load", () => {
   }
 })();
 
-/* ---------- Smooth scroll momentum ---------- */
-/* Real window.scrollTo under the hood (so sticky header + IntersectionObservers
-   keep working normally) — just eased toward the target instead of jumping the
-   full wheel delta instantly, for a smoother/heavier scroll feel. Skips any
-   wheel event the hero toggle already claimed (checked via defaultPrevented),
-   so it never fights with the open/close gesture. */
-
 (() => {
   if (!("scrollTo" in window)) return;
 
@@ -704,12 +594,6 @@ window.addEventListener("load", () => {
   let currentY = window.scrollY;
   let ticking = false;
 
-  // Reading scrollHeight forces a synchronous layout recalculation — doing
-  // that on every single wheel event (as this used to) gets steadily more
-  // expensive as the page's DOM grows (each reveal-text animation leaves
-  // 100+ letter <span>s behind permanently), which is what made scrolling
-  // feel laggier the longer you'd been on the page. Cache it instead and
-  // only recompute when the page's actual height can have changed.
   let cachedMax = Math.max(document.documentElement.scrollHeight - window.innerHeight, 0);
 
   function refreshMaxScrollY() {
@@ -732,9 +616,6 @@ window.addEventListener("load", () => {
       currentY = targetY;
     }
 
-    // Skip redundant scrollTo calls when rounding lands on the same pixel
-    // as last frame — cuts a lot of no-op scroll/layout work off the long
-    // tail of the easing curve, where the delta is fractions of a pixel.
     const rounded = Math.round(currentY);
     if (rounded !== lastApplied) {
       window.scrollTo(0, rounded);
@@ -751,12 +632,9 @@ window.addEventListener("load", () => {
   window.addEventListener(
     "wheel",
     (e) => {
-      // The hero toggle already handled this gesture (open/close swipe).
       if (e.defaultPrevented || e.ctrlKey) return;
 
       if (!ticking) {
-        // Resync in case the user scrolled by keyboard/anchor-jump since
-        // the last wheel-driven momentum sequence ended.
         targetY = window.scrollY;
         currentY = window.scrollY;
       }
@@ -773,11 +651,6 @@ window.addEventListener("load", () => {
   );
 })();
 
-/* ---------- Page-to-page transition ---------- */
-/* Links to another page of the site fade to black with the star mark
-   centred — exactly what the next page's loader looks like — so the
-   hand-off between pages reads as one continuous transition. */
-
 (() => {
   const EXIT_MS = 380;
 
@@ -788,9 +661,6 @@ window.addEventListener("load", () => {
     const url = new URL(link.href, window.location.href);
     if (url.origin !== window.location.origin) return false;
 
-    // Same page, just a different (or no) hash — leave that to the page's
-    // own in-page handling. "/games" and "/games.html", and "/" and
-    // "/index.html", are the same page.
     const normalise = (p) => p.replace(/\.html$/, "").replace(/\/index$/, "/");
     return normalise(url.pathname) !== normalise(window.location.pathname);
   }
@@ -804,7 +674,6 @@ window.addEventListener("load", () => {
     try {
       sessionStorage.setItem(NAV_FLAG, "1");
     } catch {
-      // Storage blocked — the next page just plays its full loader instead.
     }
 
     requestAnimationFrame(() => overlay.classList.add("is-active"));
@@ -824,18 +693,11 @@ window.addEventListener("load", () => {
     leaveTo(link.href);
   });
 
-  // Coming back via the browser's back button can restore this page from
-  // the back/forward cache with the exit overlay still covering it.
   window.addEventListener("pageshow", (e) => {
     if (!e.persisted) return;
     document.querySelectorAll(".page-exit").forEach((el) => el.remove());
   });
 })();
-
-/* ---------- Game card info tooltips ---------- */
-/* Hover shows the tooltip on desktop (CSS). On touch there's no hover, so a
-   tap toggles it instead, and the tap mustn't fall through to the card's
-   own link to the game page. */
 
 (() => {
   const infos = document.querySelectorAll(".game-info");
