@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Games — starcreates</title>
+  <link rel="icon" type="image/png" href="icons/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div id="loader">
+    <img src="icons/logo.png" alt="" class="loader-logo">
+  </div>
+
+  <header class="site-header">
+    <nav class="nav">
+      <div class="nav-group nav-group-left">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="index.html#about" class="nav-link">About Us</a>
+      </div>
+      <a href="index.html" class="nav-logo"><img src="icons/logo.png" alt="Logo"></a>
+      <div class="nav-group nav-group-right">
+        <a href="games.html" class="nav-link nav-link--active" aria-current="page">Games</a>
+        <a href="index.html#contact" class="nav-link">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="content" class="games-page">
+    <section class="games-intro">
+      <span class="games-eyebrow">Our portfolio</span>
+      <h1 class="games-title reveal-text">Games we've built.</h1>
+      <p class="games-sub reveal-text">From viral hits to whatever's next — every title is built community-first.</p>
+    </section>
+
+    <div class="stats-banner" aria-hidden="true">
+      <div class="stats-banner-track">
+        <div class="stats-banner-set">
+          <span class="stats-banner-item">OUR GAMES</span>
+          <img class="stats-banner-star" src="icons/logo.png" alt="">
+          <span class="stats-banner-item">OUR GAMES</span>
+          <img class="stats-banner-star" src="icons/logo.png" alt="">
+          <span class="stats-banner-item">OUR GAMES</span>
+          <img class="stats-banner-star" src="icons/logo.png" alt="">
+          <span class="stats-banner-item">OUR GAMES</span>
+          <img class="stats-banner-star" src="icons/logo.png" alt="">
+        </div>
+        <div class="stats-banner-set">
+          <span class="stats-banner-item">OUR GAMES</span>
+          <img class="stats-banner-star" src="icons/logo.png" alt="">
+          <span class="stats-banner-item">OUR GAMES</span>
+          <img class="stats-banner-star" src="icons/logo.png" alt="">
+          <span class="stats-banner-item">OUR GAMES</span>
+          <img class="stats-banner-star" src="icons/logo.png" alt="">
+          <span class="stats-banner-item">OUR GAMES</span>
+          <img class="stats-banner-star" src="icons/logo.png" alt="">
+        </div>
+      </div>
+    </div>
+
+    <section class="games-grid">
+      <article class="game-card game-card--featured">
+        <div class="game-media game-media--soon" aria-hidden="true">
+          <img src="icons/logo.png" alt="" class="game-soon-star">
+          <span class="game-soon-mark">???</span>
+        </div>
+        <div class="game-body">
+          <span class="game-status game-status--dev"><span class="game-status-dot"></span>In development</span>
+          <h2 class="game-name">Coming Soon</h2>
+          <p class="game-desc">A huge project is in the works — our most ambitious game yet. We're keeping the details under wraps for now, but it won't be long.</p>
+          <a href="https://x.com/starcreates_dev" target="_blank" rel="noopener" class="game-link">Follow for updates</a>
+        </div>
+      </article>
+
+      <article class="game-card">
+        <a class="game-media" href="https://www.roblox.com/games/87361386694346" target="_blank" rel="noopener" aria-label="Play +1 ASMR Keyboard Destruction on Roblox">
+          <img src="icons/games/asmr-keyboard.jpg" alt="+1 ASMR Keyboard Destruction gameplay thumbnail" class="game-thumb" loading="lazy">
+        </a>
+        <div class="game-body">
+          <span class="game-status game-status--live"><span class="game-status-dot"></span>Live on Roblox</span>
+          <h2 class="game-name">+1 ASMR Keyboard Destruction</h2>
+          <p class="game-desc">Smash your way through a world built for destruction, collect keycaps, level up your power and wipe out everything in your path — every hit packed with satisfying ASMR.</p>
+          <a href="https://www.roblox.com/games/87361386694346" target="_blank" rel="noopener" class="game-link">Play on Roblox</a>
+        </div>
+      </article>
+
+      <article class="game-card game-card--archived">
+        <div class="game-media game-media--archived" aria-hidden="true">
+          <span class="game-archived-title">BUILD<br>OR DIE</span>
+        </div>
+        <div class="game-body">
+          <span class="game-status game-status--down"><span class="game-status-dot"></span>Taken down by Roblox</span>
+          <h2 class="game-name">Build or Die</h2>
+          <div class="game-stats">
+            <div class="game-stat">
+              <div class="game-stat-value" data-count="2" data-suffix="M+">0M+</div>
+              <span class="game-stat-label">Visits</span>
+            </div>
+            <div class="game-stat">
+              <div class="game-stat-value" data-count="25" data-suffix="K+">0K+</div>
+              <span class="game-stat-label">Favourites</span>
+            </div>
+            <div class="game-stat">
+              <div class="game-stat-value" data-count="700">0</div>
+              <span class="game-stat-label">Peak CCU</span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="games-cta">
+      <h2 class="games-cta-title reveal-text">Got a game you want us to look at?</h2>
+      <a href="index.html#contact" class="notfound-cta">Get in touch</a>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-top">
+      <a href="index.html" class="footer-brand">
+        <img src="icons/logo.png" alt="" class="footer-logo">
+        <span>starcreates</span>
+      </a>
+
+      <nav class="footer-nav">
+        <a href="index.html#about" class="nav-link">About</a>
+        <a href="games.html" class="nav-link">Games</a>
+        <a href="index.html#contact" class="nav-link">Contact</a>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2026 starcreates. All rights reserved.</span>
+      <div class="footer-social">
+        <a href="https://x.com/starcreates_dev" target="_blank" rel="noopener">X / Twitter</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -10,11 +10,36 @@ window.scrollTo(0, 0);
 // animation used for the scroll toggle, played once as the loader hands off.
 let heroPlayIntro = () => {};
 
+// Set by the hero toggle module below. When the page is opened at
+// index.html#about / #contact (e.g. from the games page's nav), jumps
+// straight to the open/white state at that section while the loader still
+// covers the screen. Returns false if there's no such hash to honour.
+let heroArriveAtHash = () => false;
+
+// Set by the page-transition module when we're leaving one page of the site
+// for another, so the next page's loader can hand off quickly instead of
+// replaying the full first-visit intro.
+const NAV_FLAG = "sc-internal-nav";
+
+function consumeInternalNavFlag() {
+  try {
+    const flag = sessionStorage.getItem(NAV_FLAG) === "1";
+    sessionStorage.removeItem(NAV_FLAG);
+    return flag;
+  } catch {
+    return false;
+  }
+}
+
+const cameFromInternalNav = consumeInternalNavFlag();
+
 window.addEventListener("load", () => {
   const loader = document.getElementById("loader");
   const loaderLogo = document.querySelector(".loader-logo");
   const content = document.getElementById("content");
-  const MIN_DISPLAY_TIME = 1200;
+  if (!loader || !loaderLogo || !content) return;
+
+  const MIN_DISPLAY_TIME = cameFromInternalNav ? 300 : 1200;
   const EXIT_DURATION = 700;
 
   function easeInOutCubic(t) {
@@ -25,7 +50,7 @@ window.addEventListener("load", () => {
     loader.classList.add("loader-hidden");
     loaderLogo.style.animation = "none";
     content.classList.add("content-visible");
-    heroPlayIntro();
+    if (!heroArriveAtHash()) heroPlayIntro();
 
     const start = performance.now();
 
@@ -337,6 +362,34 @@ window.addEventListener("load", () => {
     }
 
     requestAnimationFrame(step);
+  };
+
+  // Arriving at index.html#about / #contact from another page: the browser's
+  // native hash jump would land on the section while the page is still in
+  // its closed/black state. Instead, snap straight to the fully open state
+  // (no animation — the loader is still covering the screen at this point)
+  // and position the section under the nav.
+  heroArriveAtHash = function arriveAtHash() {
+    const hash = window.location.hash;
+    if (hash !== "#about" && hash !== "#contact") return false;
+    const target = document.querySelector(hash);
+    if (!target) return false;
+
+    state = "open";
+    currentProgress = 1;
+    if (scrollCue) scrollCue.classList.add("scroll-cue--hidden");
+
+    hero.style.transition = "none";
+    root.style.setProperty("--hero-scale", "0");
+    applyProgress(1);
+    void hero.offsetHeight; // commit the collapsed height before re-enabling the transition
+    hero.style.transition = "";
+
+    const headerH =
+      parseFloat(getComputedStyle(root).getPropertyValue("--header-h")) || 0;
+    const y = target.getBoundingClientRect().top + window.scrollY - headerH;
+    window.scrollTo(0, Math.max(y, 0));
+    return true;
   };
 
   window.addEventListener(
@@ -718,4 +771,64 @@ window.addEventListener("load", () => {
     },
     { passive: false }
   );
+})();
+
+/* ---------- Page-to-page transition ---------- */
+/* Links to another page of the site fade to black with the star mark
+   centred — exactly what the next page's loader looks like — so the
+   hand-off between pages reads as one continuous transition. */
+
+(() => {
+  const EXIT_MS = 380;
+
+  function isInternalPageLink(link) {
+    if (link.target && link.target !== "_self") return false;
+    if (link.hasAttribute("download")) return false;
+
+    const url = new URL(link.href, window.location.href);
+    if (url.origin !== window.location.origin) return false;
+
+    // Same page, just a different (or no) hash — leave that to the page's
+    // own in-page handling.
+    const samePage =
+      url.pathname === window.location.pathname ||
+      (/\/(index\.html)?$/.test(url.pathname) && /\/(index\.html)?$/.test(window.location.pathname));
+    return !samePage;
+  }
+
+  function leaveTo(href) {
+    const overlay = document.createElement("div");
+    overlay.className = "page-exit";
+    overlay.innerHTML = '<img src="icons/logo.png" alt="" class="page-exit-logo">';
+    document.body.appendChild(overlay);
+
+    try {
+      sessionStorage.setItem(NAV_FLAG, "1");
+    } catch {
+      // Storage blocked — the next page just plays its full loader instead.
+    }
+
+    requestAnimationFrame(() => overlay.classList.add("is-active"));
+    setTimeout(() => {
+      window.location.href = href;
+    }, EXIT_MS);
+  }
+
+  document.addEventListener("click", (e) => {
+    if (e.defaultPrevented || e.button !== 0) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+    const link = e.target.closest("a[href]");
+    if (!link || !isInternalPageLink(link)) return;
+
+    e.preventDefault();
+    leaveTo(link.href);
+  });
+
+  // Coming back via the browser's back button can restore this page from
+  // the back/forward cache with the exit overlay still covering it.
+  window.addEventListener("pageshow", (e) => {
+    if (!e.persisted) return;
+    document.querySelectorAll(".page-exit").forEach((el) => el.remove());
+  });
 })();
