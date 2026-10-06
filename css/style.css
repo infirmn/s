@@ -1109,8 +1109,8 @@ body {
 
 .game-info {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  right: 14px;
+  bottom: 16px;
   z-index: 3;
   display: flex;
   align-items: center;
@@ -1137,7 +1137,7 @@ body {
 
 .game-info-tip {
   position: absolute;
-  top: calc(100% + 8px);
+  bottom: calc(100% + 8px);
   right: 0;
   padding: 7px 12px;
   border-radius: 10px;
@@ -1147,7 +1147,7 @@ body {
   font-weight: 600;
   white-space: nowrap;
   opacity: 0;
-  transform: translateY(-4px);
+  transform: translateY(4px);
   pointer-events: none;
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
@@ -1161,6 +1161,11 @@ body {
 
 .game-info:focus-visible {
   box-shadow: 0 0 0 2px #fff;
+}
+
+/* Keep the title/stats clear of the info icon in the bottom right. */
+.game-info ~ .game-overlay {
+  right: 56px;
 }
 
 .game-meta-item svg {
