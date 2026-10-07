@@ -449,6 +449,15 @@ window.addEventListener("load", () => {
   const counters = document.querySelectorAll("[data-count]");
 
   if ("IntersectionObserver" in window) {
+    counters.forEach((el) => {
+      el.textContent = formatValue(
+        parseFloat(el.dataset.start || "0"),
+        parseInt(el.dataset.decimals || "0", 10),
+        el.dataset.prefix || "",
+        el.dataset.suffix || ""
+      );
+    });
+
     const observer = new IntersectionObserver(
       (entries, obs) => {
         entries.forEach((entry) => {
@@ -727,4 +736,60 @@ window.addEventListener("load", () => {
   });
 
   document.addEventListener("click", () => closeAll(null));
+})();
+
+(() => {
+  const list = document.querySelector(".faq-list");
+  if (!list) return;
+
+  const items = Array.from(list.querySelectorAll(".faq-item"));
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const running = new Map();
+
+  list.classList.add("faq-js");
+
+  function closedHeight(item) {
+    const summary = item.querySelector(".faq-question");
+    return summary.offsetHeight + (item.offsetHeight - item.clientHeight);
+  }
+
+  function setOpen(item, open) {
+    if (item.classList.contains("is-open") === open) return;
+
+    const previous = running.get(item);
+    const startHeight = item.offsetHeight;
+    if (previous) previous.cancel();
+
+    item.classList.toggle("is-open", open);
+    if (open) item.open = true;
+
+    if (reduceMotion.matches) {
+      if (!open) item.open = false;
+      return;
+    }
+
+    const endHeight = open ? item.scrollHeight + (item.offsetHeight - item.clientHeight) : closedHeight(item);
+    const animation = item.animate(
+      { height: [`${startHeight}px`, `${endHeight}px`] },
+      { duration: open ? 420 : 340, easing: "cubic-bezier(0.4, 0, 0.2, 1)" }
+    );
+    running.set(item, animation);
+
+    animation.onfinish = () => {
+      running.delete(item);
+      if (!open) item.open = false;
+    };
+    animation.oncancel = () => running.delete(item);
+  }
+
+  items.forEach((item) => {
+    if (item.open) item.classList.add("is-open");
+
+    item.querySelector(".faq-question").addEventListener("click", (e) => {
+      e.preventDefault();
+      const open = !item.classList.contains("is-open");
+      if (open) items.forEach((other) => other !== item && setOpen(other, false));
+      setOpen(item, open);
+    });
+  });
 })();
