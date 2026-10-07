@@ -262,7 +262,7 @@ window.addEventListener("load", () => {
     window.scrollTo({ top: Math.max(y, 0), behavior: "smooth" });
   }
 
-  document.querySelectorAll('a[href="#about"], a[href="#contact"]').forEach((link) => {
+  document.querySelectorAll('a[href="#about"], a[href="#contact"], a[href="#faq"]').forEach((link) => {
     link.addEventListener("click", (e) => {
       const target = document.querySelector(link.getAttribute("href"));
       if (!target) return;
@@ -299,7 +299,7 @@ window.addEventListener("load", () => {
 
   heroArriveAtHash = function arriveAtHash() {
     const hash = window.location.hash;
-    if (hash !== "#about" && hash !== "#contact") return false;
+    if (hash !== "#about" && hash !== "#contact" && hash !== "#faq") return false;
     const target = document.querySelector(hash);
     if (!target) return false;
 
@@ -668,7 +668,7 @@ window.addEventListener("load", () => {
   function leaveTo(href) {
     const overlay = document.createElement("div");
     overlay.className = "page-exit";
-    overlay.innerHTML = '<img src="icons/logo.png" alt="" class="page-exit-logo">';
+    overlay.innerHTML = '<img src="icons/logo-512.png" alt="" class="page-exit-logo">';
     document.body.appendChild(overlay);
 
     try {

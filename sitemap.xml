@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://starcreates.org/</loc>
+    <lastmod>2026-10-08</lastmod>
+    <image:image><image:loc>https://starcreates.org/icons/logo-512.png</image:loc></image:image>
+  </url>
+  <url>
+    <loc>https://starcreates.org/games</loc>
+    <lastmod>2026-10-08</lastmod>
+    <image:image><image:loc>https://starcreates.org/icons/games/build-or-die.jpg</image:loc></image:image>
+    <image:image><image:loc>https://starcreates.org/icons/games/asmr-keyboard.jpg</image:loc></image:image>
+  </url>
+</urlset>

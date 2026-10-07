@@ -712,6 +712,90 @@ body {
   opacity: 0.55;
 }
 
+/* ---------- FAQ ---------- */
+
+.faq {
+  padding-bottom: 120px;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+  padding-top: 64px;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-item {
+  border: 1px solid color-mix(in srgb, var(--fg) 14%, transparent);
+  border-radius: 20px;
+  transition: background 0.25s ease;
+}
+
+.faq-item:hover,
+.faq-item[open] {
+  background: color-mix(in srgb, var(--fg) 5%, transparent);
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq-question::-webkit-details-marker {
+  display: none;
+}
+
+.faq-question::after {
+  content: "+";
+  flex-shrink: 0;
+  font-size: 22px;
+  font-weight: 400;
+  opacity: 0.55;
+  transition: transform 0.25s ease;
+}
+
+.faq-item[open] .faq-question::after {
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  padding: 0 24px 22px;
+  font-size: 15px;
+  line-height: 1.7;
+  opacity: 0.72;
+}
+
+.faq-answer a {
+  color: var(--fg);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ---------- Contact ---------- */
 
 .contact {
@@ -1322,7 +1406,8 @@ body {
     width: clamp(180px, 55vw, 260px);
   }
 
-  .contact-grid {
+  .contact-grid,
+  .faq-grid {
     grid-template-columns: 1fr;
     gap: 24px;
   }

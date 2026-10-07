@@ -1,0 +1,23 @@
+# starcreates
+
+> starcreates is an independent Roblox game studio founded by inf and esyt. It builds community-first Roblox games, including Build or Die and +1 ASMR Keyboard Destruction, and partners with, invests in and acquires Roblox games from other developers.
+
+## Key facts
+
+- Website: https://starcreates.org
+- Platform: Roblox
+- Founders: inf (@infirmn), Co-Founder & Lead Developer, 7+ years experience; esyt (@ESGaminggg), Co-Founder & Community Lead
+- Over 2 million play sessions across all starcreates games
+- More than 342,000 players and around 24,500 monthly active users
+- Contact: hello@starcreates.org, @starcreates_dev on X
+
+## Games
+
+- Build or Die: 2M+ visits, 25,900+ favourites, 84,300+ likes, peak of 724 concurrent players
+- [+1 ASMR Keyboard Destruction](https://www.roblox.com/games/87361386694346): 59,800+ visits, 2,300+ favourites, peak of 378 concurrent players
+- A new, larger project is in development
+
+## Pages
+
+- [Home](https://starcreates.org/): about the studio, stats, founders, FAQ and contact
+- [Games](https://starcreates.org/games): every starcreates Roblox game with visit and favourite counts
