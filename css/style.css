@@ -681,6 +681,21 @@ body {
   max-width: 42ch;
 }
 
+.founder-linkedin {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.founder-linkedin:hover,
+.founder-linkedin:focus-visible {
+  opacity: 1;
+}
+
 .founder-stats {
   display: flex;
   gap: 32px;

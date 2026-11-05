@@ -1,16 +1,20 @@
 # starcreates
 
-> starcreates is an independent Roblox game studio founded by inf and esyt. It builds community-first Roblox games, including Build or Die and +1 ASMR Keyboard Destruction, and partners with, invests in and acquires Roblox games from other developers.
+> starcreates is a Roblox game development and publishing company led by co-founders and CEOs Theo Evans and Elliot Askew. It develops and operates its own Roblox experiences, including Build or Die and +1 ASMR Keyboard Destruction, and partners with, invests in and acquires Roblox games from other developers.
 
 ## Key facts
 
 - Website: https://starcreates.org
-- Platform: Roblox
-- Founders: inf (@infirmn), Co-Founder & Lead Developer, 7+ years experience; esyt (@ESGaminggg), Co-Founder & Community Lead
+- Industry: Roblox game development, publishing, investment and acquisitions
 - Over 2 million play sessions across all starcreates games
 - More than 342,000 players and around 24,500 monthly active users
 - Contact: hello@starcreates.org, @starcreates_dev on X
 - LinkedIn: https://www.linkedin.com/company/starcreates/
+
+## Leadership
+
+- Theo Evans (@infirmn), Co-Founder & CEO: Roblox game developer and software engineer with 7+ years of experience building large-scale Roblox experiences and complex game systems. Has contributed to Roblox games that have collectively surpassed 4 billion play sessions, and was invited to the Roblox Developers Conference (RDC) 2025 and 2026. Leads development and acquisitions. LinkedIn: https://www.linkedin.com/in/theo-at-starcreates/
+- Elliot Askew (@ESGaminggg), Co-Founder & CEO: leads company growth, manages development across all projects and builds the community. Also a content creator and video editor whose YouTube channels have tens of thousands of subscribers and millions of combined views. LinkedIn: https://www.linkedin.com/in/elliot-askew/
 
 ## Games
 
@@ -20,5 +24,5 @@
 
 ## Pages
 
-- [Home](https://starcreates.org/): about the studio, stats, founders, FAQ and contact
+- [Home](https://starcreates.org/): about the company, stats, founders, FAQ and contact
 - [Games](https://starcreates.org/games): every starcreates Roblox game with visit and favourite counts
