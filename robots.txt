@@ -1,14 +1,26 @@
-# starcreates.org - all crawlers welcome, including AI/answer engines.
+# robots.txt for https://starcreates.org
+# starcreates - Roblox game development and publishing company.
+# All search engines and AI / answer engines are welcome to crawl this site.
+# A plain-text summary for AI tools is available at https://starcreates.org/llms.txt
+
 User-agent: *
 Allow: /
 
+# Search engines
 User-agent: Googlebot
 Allow: /
 
-User-agent: Google-Extended
+User-agent: Bingbot
 Allow: /
 
-User-agent: Bingbot
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# AI and answer engines
+User-agent: Google-Extended
 Allow: /
 
 User-agent: GPTBot
@@ -26,10 +38,31 @@ Allow: /
 User-agent: Claude-SearchBot
 Allow: /
 
+User-agent: Claude-User
+Allow: /
+
 User-agent: PerplexityBot
 Allow: /
 
+User-agent: Perplexity-User
+Allow: /
+
 User-agent: Applebot-Extended
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: MistralAI-User
+Allow: /
+
+User-agent: CCBot
 Allow: /
 
 Sitemap: https://starcreates.org/sitemap.xml

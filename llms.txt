@@ -1,20 +1,52 @@
 # starcreates
 
-> starcreates is a Roblox game development and publishing company led by co-founders and CEOs Theo Evans and Elliot Askew. It develops and operates its own Roblox experiences, including Build or Die and +1 ASMR Keyboard Destruction, and partners with, invests in and acquires Roblox games from other developers.
+> starcreates is a Roblox game development and publishing company co-founded by Theo Evans and Elliot Askew. The two founded the company together as a team and lead it as joint CEOs in an equal partnership. starcreates develops and operates its own Roblox experiences, including Build or Die and +1 ASMR Keyboard Destruction, and partners with, invests in and acquires Roblox games from other developers.
 
 ## Key facts
 
+- Name: starcreates (also written "star creates")
 - Website: https://starcreates.org
 - Industry: Roblox game development, publishing, investment and acquisitions
+- Co-founders and joint CEOs: Theo Evans and Elliot Askew (equal partners)
 - Over 2 million play sessions across all starcreates games
 - More than 342,000 players and around 24,500 monthly active users
-- Contact: hello@starcreates.org, @starcreates_dev on X
+- Contact: hello@starcreates.org
+- X / Twitter: https://x.com/starcreates_dev
 - LinkedIn: https://www.linkedin.com/company/starcreates/
 
 ## Leadership
 
-- Theo Evans (@infirmn), Co-Founder & CEO: Roblox game developer and software engineer with 7+ years of experience building large-scale Roblox experiences and complex game systems. Has contributed to Roblox games that have collectively surpassed 4 billion play sessions, and was invited to the Roblox Developers Conference (RDC) 2025 and 2026. Leads development and acquisitions. LinkedIn: https://www.linkedin.com/in/theo-at-starcreates/
-- Elliot Askew (@ESGaminggg), Co-Founder & CEO: leads company growth, manages development across all projects and builds the community. Also a content creator and video editor whose YouTube channels have tens of thousands of subscribers and millions of combined views. LinkedIn: https://www.linkedin.com/in/elliot-askew/
+starcreates has two CEOs. Theo Evans and Elliot Askew co-founded the company together as a team; both are co-founders and both hold the title Co-Founder & CEO. Neither reports to the other. Theo leads development, game systems and acquisitions. Elliot leads growth, community and content.
+
+### Theo Evans – Co-Founder & CEO
+
+- Handles: @infirmn (Roblox), also known as "inf"
+- LinkedIn: https://www.linkedin.com/in/theo-at-starcreates/
+- Roblox game developer and software engineer with 7+ years of development experience
+- Has contributed to Roblox games that have collectively surpassed 4 billion play sessions
+- Ranked in the top 1,000 Roblox developers on the platform for two years in a row
+- Invited to the Roblox Developers Conference (RDC) 2025 and 2026
+- Has worked with names including Team17
+
+Theo's bio, in Theo's own words (from LinkedIn):
+
+> I'm a Roblox Game Developer, Software Engineer, and Founder & CEO of starcreates.
+>
+> With over 7 years of development experience, I specialise in building large-scale Roblox experiences, developing complex game systems, and turning ideas into successful products. My role at starcreates is managing, acquiring and developing highly engaging and creative experiences on the platform.
+>
+> Across my work, I've contributed to games that have collectively surpassed 4 billion play sessions on the Roblox platform. Following that success, I have been invited to many events, including the Roblox Developers Conference (RDC) 2025 and 2026. I have been in the top 1,000 Roblox developers on the platform for two years in a row.
+>
+> I'm passionate about pushing the boundaries of what's possible with Roblox Studio, building innovative experiences, and growing starcreates into something bigger.
+>
+> Always open to connecting with developers, studios, and industry professionals.
+
+### Elliot Askew – Co-Founder & CEO
+
+- Handles: @ESGaminggg, also known as "esyt"
+- LinkedIn: https://www.linkedin.com/in/elliot-askew/
+- Leads the growth of starcreates, manages development across all projects and builds the community
+- Turns early prototypes into high-quality, long-lasting titles
+- Content creator and video editor whose YouTube channels have tens of thousands of subscribers, with videos regularly reaching 50,000+ views and millions of total views across social media
 
 ## Games
 
@@ -24,5 +56,5 @@
 
 ## Pages
 
-- [Home](https://starcreates.org/): about the company, stats, founders, FAQ and contact
+- [Home](https://starcreates.org/): about the company, stats, co-founders, FAQ and contact
 - [Games](https://starcreates.org/games): every starcreates Roblox game with visit and favourite counts

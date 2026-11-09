@@ -2,12 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://starcreates.org/</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-09</lastmod>
+    <image:image><image:loc>https://starcreates.org/icons/og-image.png</image:loc></image:image>
     <image:image><image:loc>https://starcreates.org/icons/logo-512.png</image:loc></image:image>
+    <image:image><image:loc>https://starcreates.org/avatars/inf.png</image:loc></image:image>
+    <image:image><image:loc>https://starcreates.org/avatars/esyt.png</image:loc></image:image>
   </url>
   <url>
     <loc>https://starcreates.org/games</loc>
-    <lastmod>2026-11-05</lastmod>
+    <lastmod>2026-11-09</lastmod>
     <image:image><image:loc>https://starcreates.org/icons/games/build-or-die.jpg</image:loc></image:image>
     <image:image><image:loc>https://starcreates.org/icons/games/asmr-keyboard.jpg</image:loc></image:image>
   </url>
